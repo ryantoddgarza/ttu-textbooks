@@ -1,0 +1,15 @@
+{
+  "private": true,
+  "name": "ttu-textbooks",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ryantoddgarza/ttu-textbooks.git"
+  },
+  "author": "Ryan Todd Garza <ryantoddgarza@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/ryantoddgarza/ttu-textbooks/issues"
+  },
+  "homepage": "https://github.com/ryantoddgarza/ttu-textbooks#readme"
+}
