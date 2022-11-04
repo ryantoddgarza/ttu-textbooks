@@ -1,7 +1,13 @@
 {
   "private": true,
   "name": "ttu-textbooks",
-  "scripts": {},
+  "scripts": {
+    "format": "npm run prettier:fix; npm run lint:fix",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prettier": "prettier --check .",
+    "prettier:fix": "prettier --check --write ."
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ryantoddgarza/ttu-textbooks.git"
@@ -11,12 +17,9 @@
     "url": "https://github.com/ryantoddgarza/ttu-textbooks/issues"
   },
   "homepage": "https://github.com/ryantoddgarza/ttu-textbooks#readme",
-  "scripts": {
-    "format": "npm run prettier:fix",
-    "prettier": "prettier --check .",
-    "prettier:fix": "prettier --check --write ."
-  },
   "devDependencies": {
+    "@bitpas/eslint-config": "^0.6.2",
+    "eslint": "^8.26.0",
     "prettier": "^2.7.1"
   }
 }
