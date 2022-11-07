@@ -6,8 +6,8 @@
     "clean": "gatsby clean",
     "develop": "gatsby develop",
     "format": "npm run prettier:fix; npm run lint:fix",
-    "lint": "eslint .",
-    "lint:fix": "eslint --fix .",
+    "lint": "eslint --ext .js,.jsx .",
+    "lint:fix": "eslint --ext .js,.jsx --fix .",
     "prettier": "prettier --check .",
     "prettier:fix": "prettier --check --write .",
     "serve": "gatsby serve"
