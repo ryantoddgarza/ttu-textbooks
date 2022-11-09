@@ -8,3 +8,8 @@
   padding-left: theme.$site-margin;
   padding-right: theme.$site-margin;
 }
+
+.global-footer .copyright {
+  font-size: font-size("xs");
+  color: color("text-weak");
+}
