@@ -1,0 +1,18 @@
+@use "../functions" as *;
+
+// Theme variants
+
+.section.light {
+  color: color("text");
+  background-color: color("background");
+}
+
+.section.dark {
+  color: color("text-inverse");
+  background-color: color("background-inverse");
+}
+
+.section.strong {
+  color: color("text");
+  background-color: color("background-weak");
+}

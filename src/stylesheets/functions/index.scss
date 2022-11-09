@@ -1,0 +1,35 @@
+@use "../tokens/system";
+@use "../tokens/theme";
+
+@function color($value) {
+  $token: map-get(theme.$color, $value);
+  @return map-get(system.$color, $token);
+}
+
+@function font-family($value) {
+  $token: map-get(theme.$font-type, $value) or map-get(theme.$font-role, $value);
+  @return map-get(system.$font-stack, $token);
+}
+
+@function font-size($value) {
+  $token: map-get(theme.$font-size, $value);
+  @return map-get(system.$type-scale, $token);
+}
+
+@function font-weight($value) {
+  $token: map-get(theme.$font-weight, $value);
+  @return map-get(system.$font-weight, $token);
+}
+
+@function line-height($value) {
+  $token: map-get(theme.$line-height, $value);
+  @return map-get(system.$line-height, $token);
+}
+
+@function transition-duration($value) {
+  @return map-get(system.$transition, "duration", $value);
+}
+
+@function units($value) {
+  @return system.$spacing-base * $value;
+}

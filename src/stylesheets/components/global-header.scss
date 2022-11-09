@@ -1,3 +1,13 @@
+@use "../tokens/theme";
+@use "../functions" as *;
+
 .global-header {
   position: relative;
+  padding-left: theme.$site-margin;
+  padding-right: theme.$site-margin;
+  min-height: units(theme.$global-header-height);
+  height: auto;
+  border-bottom-color: color("border");
+  border-bottom-width: 1px;
+  border-bottom-style: solid;
 }

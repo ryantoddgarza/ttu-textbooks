@@ -1,0 +1,15 @@
+@use "../functions" as *;
+@use "../mixins" as *;
+
+body {
+  color: color("text");
+  background-color: color("background");
+  overflow-x: hidden;
+  @include typeset("body", "md", "body");
+}
+
+img {
+  user-select: none;
+  max-width: 100%;
+  height: auto;
+}

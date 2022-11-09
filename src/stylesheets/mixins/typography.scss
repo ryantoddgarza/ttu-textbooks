@@ -1,0 +1,7 @@
+@use "../functions" as *;
+
+@mixin typeset($family: "body", $size: "md", $line-height: "body") {
+  font-family: font-family($family);
+  font-size: font-size($size);
+  line-height: line-height($line-height);
+}

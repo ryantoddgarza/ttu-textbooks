@@ -1,0 +1,10 @@
+@use "../tokens/system";
+@use "../functions" as *;
+
+@mixin at-media($value) {
+  $spacing-multiple: map-get(system.$breakpoint, $value);
+
+  @media (min-width: #{units($spacing-multiple)}) {
+    @content;
+  }
+}

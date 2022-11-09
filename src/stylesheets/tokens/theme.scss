@@ -1,0 +1,69 @@
+$button: (
+  height: (
+    sm: 4,
+    md: 5,
+    lg: 6,
+  ),
+  border: (
+    width: 1px,
+    style: solid,
+    radius: 0,
+  ),
+);
+
+$color: (
+  primary: red-50,
+  text: gray-90,
+  text-inverse: gray-1,
+  text-link: gray-90,
+  text-link-hover: red-50,
+  text-weak: gray-30,
+  background: gray-1,
+  background-inverse: gray-90,
+  background-weak: gray-5,
+  border: gray-10,
+);
+
+$font-type: (
+  sans: helvetica,
+  serif: georgia,
+  mono: monospace,
+);
+
+$font-role: (
+  body: georgia,
+  heading: georgia,
+  ui: georgia,
+  code: monospace,
+);
+
+$font-size: (
+  xs: 2,
+  sm: 4,
+  md: 9,
+  lg: 12,
+  xl: 13,
+  xxl: 15,
+);
+
+$font-weight: (
+  thin: false,
+  ultralight: false,
+  light: false,
+  normal: 4,
+  medium: false,
+  semibold: false,
+  bold: 7,
+  black: false,
+);
+
+$global-header-height: 10;
+
+$line-height: (
+  ui: 1,
+  heading: 3,
+  body: 4,
+  extended: 5,
+);
+
+$site-margin: 3vw;

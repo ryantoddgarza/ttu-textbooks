@@ -1,0 +1,101 @@
+@use "../tokens/theme";
+@use "../functions" as *;
+@use "../mixins" as *;
+
+.button {
+  position: relative;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding-left: units(2);
+  padding-right: units(2);
+  vertical-align: bottom;
+  font-weight: font-weight("bold");
+  white-space: nowrap;
+  border: none;
+  user-select: none;
+  @include transition((color, background-color, border-color));
+}
+
+// Size variants
+
+.button.small {
+  height: units(map-get(theme.$button, height, sm));
+}
+
+.button.medium {
+  height: units(map-get(theme.$button, height, md));
+}
+
+.button.large {
+  height: units(map-get(theme.$button, height, lg));
+}
+
+// Theme variants
+
+.button.ghost {
+  padding: 0;
+  background-color: color(transparent);
+}
+
+.button.light {
+  color: color("text");
+  background-color: color("background");
+  border-color: color("background-inverse");
+  border-width: map-get(theme.$button, border, width);
+  border-style: map-get(theme.$button, border, style);
+  border-radius: map-get(theme.$button, border, radius);
+
+  &:hover {
+    color: color("text-inverse");
+    background-color: color("background-inverse");
+    border-color: color("background-inverse");
+  }
+}
+
+.button.dark {
+  color: color("text-inverse");
+  background-color: color("background-inverse");
+  border-color: color("background-inverse");
+  border-width: map-get(theme.$button, border, width);
+  border-style: map-get(theme.$button, border, style);
+  border-radius: map-get(theme.$button, border, radius);
+
+  &:hover {
+    color: color("text");
+    background-color: color("background");
+    border-color: color("background-inverse");
+  }
+}
+
+// Type variant: icon-btn
+
+.button.icon-btn {
+  padding: 0;
+}
+
+.button.icon-btn.small {
+  width: units(map-get(theme.$button, height, sm));
+}
+
+.button.icon-btn.medium {
+  width: units(map-get(theme.$button, height, md));
+}
+
+.button.icon-btn.large {
+  width: units(map-get(theme.$button, height, lg));
+}
+
+// Group
+
+.button-group {
+  margin-bottom: units(-2);
+}
+
+.button-group .button {
+  margin-bottom: units(2);
+
+  &:not(:last-child) {
+    margin-right: units(2);
+  }
+}

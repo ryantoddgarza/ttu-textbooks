@@ -1,0 +1,12 @@
+@use "../functions" as *;
+
+.icon {
+  width: units(2.5);
+  height: units(2.5);
+}
+
+.icon svg,
+.icon img {
+  width: 100%;
+  height: 100%;
+}

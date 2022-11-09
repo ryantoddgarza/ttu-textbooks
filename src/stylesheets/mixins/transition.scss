@@ -1,0 +1,8 @@
+@use "../functions" as *;
+
+@mixin transition($property: all, $duration: normal, $delay: null) {
+  transition-property: $property;
+  transition-duration: transition-duration($duration);
+  transition-delay: transition-duration($delay);
+  transition-timing-function: ease-in-out;
+}

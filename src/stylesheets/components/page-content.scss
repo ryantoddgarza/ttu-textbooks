@@ -1,0 +1,5 @@
+@use "../mixins" as *;
+
+.page-content {
+  @include page-content;
+}
