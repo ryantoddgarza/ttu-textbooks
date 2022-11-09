@@ -1,8 +1,10 @@
 @use "../tokens/theme";
 @use "../functions" as *;
+@use "../mixins" as *;
 
 .global-header {
   position: relative;
+  display: flex;
   padding-left: theme.$site-margin;
   padding-right: theme.$site-margin;
   min-height: units(theme.$global-header-height);
@@ -10,4 +12,41 @@
   border-bottom-color: color("border");
   border-bottom-width: 1px;
   border-bottom-style: solid;
+}
+
+.global-header .item {
+  display: flex;
+  align-items: center;
+}
+
+.global-header .logo-container {
+  @include typeset("body", "md", "ui");
+}
+
+.global-header .logo {
+}
+
+.global-header .nav {
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.global-header .nav .list {
+  display: flex;
+}
+
+.global-header .nav .list-item {
+  padding-left: units(1);
+  padding-right: units(1);
+  @include typeset("sans", "sm", "ui");
+}
+
+.global-header .nav .link {
+  color: color("text");
+  @include transition(color);
+
+  &:hover {
+    color: color("text-link-hover");
+  }
 }
