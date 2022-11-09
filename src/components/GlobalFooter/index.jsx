@@ -1,5 +1,7 @@
 import React from 'react';
 
-const GlobalFooter = () => <footer className="global-footer"></footer>;
+const GlobalFooter = () => (
+  <footer className="global-footer section dark"></footer>
+);
 
 export default GlobalFooter;
