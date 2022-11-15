@@ -1,45 +1,61 @@
 import React from 'react';
 import { Link } from 'gatsby';
-import { EDUCATORS_PATH, STUDENTS_PATH } from '../../constants';
+import {
+  EDUCATORS_PATH,
+  STUDENTS_PATH,
+  STUDENT_SURVEY_URL,
+} from '../../constants';
 
 const Home = () => (
   <div className="main-content">
     <section className="page-content">
-      <h1>The Textbook Problem</h1>
+      <h1>The Impact of High Textbook Costs on Student Success</h1>
       <p>
-        Elit adipisicing eveniet quae eius at. Expedita optio sint explicabo
-        soluta quidem reiciendis. Quia facere sed temporibus sed nobis Officiis
-        inventore sit necessitatibus optio repellat? Quia exercitationem animi
-        numquam provident <a href="/">Link example</a>.
+        This project addresses the impact of high course material (textbook)
+        costs on student academic performance and success at Texas Tech
+        University.
       </p>
+    </section>
+    <section className="page-content">
+      <h2>Student Survey</h2>
+      <p>
+        Data from our{' '}
+        <a href={STUDENT_SURVEY_URL} target="_blank" rel="noopener noreferrer">
+          student survey
+        </a>{' '}
+        is being continually compiled and analyzed. Any and all Texas Tech
+        students are encouraged to respond to the general demographic,
+        financial, and academic questions presented in the survey so that this
+        study can monitor the correlations over time.
+      </p>
+      <div className="text-align-center">
+        <a
+          className="button large dark"
+          href={STUDENT_SURVEY_URL}
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          Take the Survey
+        </a>
+      </div>
     </section>
     <section className="page-content">
       <h2>Survey Data</h2>
       <p>
-        Adipisicing quam error quaerat repellendus laborum Quaerat repellat
-        minima placeat accusantium amet corrupti. Consectetur magni quia
-        expedita ut quasi. Consequuntur molestiae necessitatibus quaerat quia
-        nihil, eveniet. Sequi enim sit non.
-      </p>
-      <div className="text-align-center">
-        <a href="/" className="button large dark">
-          Take the Survey
-        </a>
-      </div>
-      <p>
-        Sit molestias ipsum consectetur excepturi vitae. Fugit a vero laboriosam
-        corrupti possimus. Tempore similique dolor ut maiores incidunt. Atque
-        facilis praesentium pariatur delectus aliquam qui nam. Beatae tempora
-        adipisci reprehenderit.
+        The{' '}
+        <a href={STUDENT_SURVEY_URL} target="_blank" rel="noopener noreferrer">
+          student survey
+        </a>{' '}
+        data will be openly available on this site as soon as sufficient data is
+        gathered.
       </p>
     </section>
     <section className="page-content">
       <h2>Resources</h2>
       <p>
-        Sit ab iste dignissimos asperiores quam asperiores ipsum eos ea?
-        Provident ipsam repellat vel adipisci dolor Optio mollitia similique
-        debitis dolore esse? Ex officia maiores distinctio odit distinctio
-        recusandae libero.
+        Resources for students and faculty are available and focused on ways to
+        reduce the potential effects of high course material costs on student
+        academic success.
       </p>
       <h3>
         <Link to={STUDENTS_PATH}>Resources for Students</Link>
