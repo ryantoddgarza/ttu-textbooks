@@ -1,12 +1,24 @@
 import React from 'react';
+import { useStaticQuery, graphql } from 'gatsby';
 
-const Educators = () => (
-  <div className="main-content">
-    <section className="page-content">
-      <h1>Resources for Educators</h1>
-      <p>Educator resources will be available soon.</p>
-    </section>
-  </div>
-);
+const Educators = () => {
+  const {
+    markdownRemark: { html },
+  } = useStaticQuery(graphql`
+    query EducatorQuery {
+      markdownRemark(frontmatter: { title: { eq: "Educator Resources" } }) {
+        html
+      }
+    }
+  `);
+
+  return (
+    <div className="main-content">
+      <section className="page-content">
+        <div dangerouslySetInnerHTML={{ __html: html }} />
+      </section>
+    </div>
+  );
+};
 
 export default Educators;
