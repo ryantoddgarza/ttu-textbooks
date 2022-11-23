@@ -6,6 +6,8 @@ Deliverable for Introduction to Technical Writing (ENGL-2311-D35) Project 3. Tau
 
 ## Running locally
 
+### Step 1: Clone the repository
+
 ```shell
 # Clone the repository
 git clone https://github.com/ryantoddgarza/ttu-textbooks.git
@@ -15,7 +17,20 @@ cd ttu-textbooks
 
 # Install dependencies
 npm install
+```
 
-# Start the development server
+### Step 2: Configure the `env` variables
+
+| Name                            | Description                                     |
+| ------------------------------- | ----------------------------------------------- |
+| `GC_PRIVATE_KEY_ID`             | Google Cloud private key id.                    |
+| `GC_PRIVATE_KEY`                | Google Cloud private key.                       |
+| `GC_CLIENT_EMAIL`               | Google Cloud project service account email.     |
+| `GC_CLIENT_ID`                  | Google Cloud project service account unique id. |
+| `STUDENT_SURVEY_SPREADSHEET_ID` | Student Survey Google spreadsheet id.           |
+
+### Step 3: Start the development server
+
+```shell
 npm run develop
 ```
