@@ -1,8 +1,8 @@
 # ttu-textbooks
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/44b36b21-552c-4095-85ec-e43a9d6fd025/deploy-status)](https://app.netlify.com/sites/ttu-textbooks/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/81dc1367-6031-4440-ac8c-5d6e7fbaa9ed/deploy-status)](https://app.netlify.com/sites/ttu-textbooks/deploys)
 
-Deliverable for Introduction to Technical Writing (ENGL-2311-D35) Project 3. Taught by Dr. Min-Joo Kim.
+Project 3 deliverable for Introduction to Technical Writing (ENGL-2311-D35, Fall 2022) taught by Dr. Min-Joo Kim at Texas Tech University.
 
 ## Running locally
 
@@ -19,7 +19,9 @@ cd ttu-textbooks
 npm install
 ```
 
-### Step 2: Configure the `env` variables
+### Step 2: Configure the environment variables
+
+Create a file named `.env` at the project's root with the following variables:
 
 | Name                            | Description                                     |
 | ------------------------------- | ----------------------------------------------- |
