@@ -61,7 +61,9 @@
     line-height: line-height("body");
   }
 
-  p a {
+  p a,
+  ul a,
+  ol a {
     color: color("text-link");
     box-shadow: 0 -2px 0 color("text-weak") inset;
     @include transition((color, box-shadow));
