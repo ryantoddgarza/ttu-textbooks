@@ -1,6 +1,15 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
+import {
+  XYPlot,
+  XAxis,
+  YAxis,
+  HorizontalGridLines,
+  VerticalBarSeries,
+} from 'react-vis';
 import correlationCoefficient from '../../utils/correlationCoefficient';
+import instancesIn from '../../utils/instancesIn';
+import getHiValueKey from '../../utils/getHiValueKey';
 
 const DataVis = () => {
   const {
@@ -12,6 +21,7 @@ const DataVis = () => {
           unableToPay: haveYouEverBeenUnableToPayForRequiredCourseMaterial_s__
           hasDropped: haveYouEverDropped__doesNotAppearOnTranscript_ACourseAtTexasTechUniversity_
           hasWithdrawn: haveYouEverWithdrawn__appearsOnTranscriptAsA__W__FromACourseAtTexasTechUniversity_
+          cost: howMuchMoneyDidYouSpendOnRequiredCourseMaterialsThisSemester_
         }
       }
     }
@@ -45,9 +55,11 @@ const DataVis = () => {
     }
   }
 
+  // Arrays by question
   const unableToPay = data.map(({ unableToPay }) => unableToPay);
   const hasDropped = data.map(({ hasDropped }) => hasDropped);
   const hasWithdrawn = data.map(({ hasWithdrawn }) => hasWithdrawn);
+  const cost = data.map(({ cost }) => cost);
 
   const corrPayDrop = correlationCoefficient(
     unableToPay,
@@ -61,6 +73,21 @@ const DataVis = () => {
     data.length
   );
 
+  // Reduce cost categories
+  const costCategories = instancesIn(cost);
+
+  // Get cost category with the most responses
+  const mostCostCategory = getHiValueKey(costCategories);
+
+  // Format cost data for react-vis
+  const costData = Object.entries(costCategories).map(([key, value]) => {
+    return { x: key, y: value };
+  });
+
+  // Order cost data
+  costData.unshift(costData.splice(costData.length - 1, 1)[0]);
+
+  // For conditional rendering of layout elements
   const layout = {
     hasDropData: corrPayDrop > 0,
     hasWitdrawalData: corrPayWithdraw > 0,
@@ -86,11 +113,34 @@ const DataVis = () => {
                 <b>
                   {Math.round(corrPayWithdraw * 100)}% more likely to withdraw
                 </b>{' '}
-                (appears on transcript) a course at Texas Tech University.
+                (appears on transcript) from a course at Texas Tech University.
               </p>
             )}
           </>
         )}
+      </div>
+      <div>
+        <h3>Financial</h3>
+        <div className="visualizations">
+          <section>
+            <h4>Spending</h4>
+            <p>
+              Most students spend {mostCostCategory} per semester on required
+              course materials.
+            </p>
+            <XYPlot
+              width={300}
+              height={300}
+              margin={{ bottom: 72 }}
+              xType="ordinal"
+            >
+              <HorizontalGridLines />
+              <VerticalBarSeries data={costData} />
+              <XAxis tickLabelAngle={-45} />
+              <YAxis />
+            </XYPlot>
+          </section>
+        </div>
       </div>
     </>
   );
