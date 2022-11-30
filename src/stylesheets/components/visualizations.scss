@@ -1,0 +1,24 @@
+@use "../functions" as *;
+
+.visualizations {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin: 0 auto;
+}
+
+.visualizations section {
+  flex-basis: 300px;
+  flex-grow: 1;
+  margin-bottom: units(4);
+}
+
+.visualizations h4 {
+  margin-top: units(0);
+}
+
+.visualizations p {
+  max-width: 300px;
+  font-size: font-size(sm);
+}
