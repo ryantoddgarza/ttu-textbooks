@@ -1,5 +1,6 @@
 import React from 'react';
 import { useStaticQuery, graphql } from 'gatsby';
+import DataVis from '../DataVis';
 import { STUDENT_SURVEY_URL } from '../../constants';
 
 const Home = () => {
@@ -49,6 +50,7 @@ const Home = () => {
       </section>
       <section className="page-content">
         <div dangerouslySetInnerHTML={{ __html: dataMarkdown.html }} />
+        <DataVis />
       </section>
       <section className="page-content">
         <div dangerouslySetInnerHTML={{ __html: resourcesMarkdown.html }} />
