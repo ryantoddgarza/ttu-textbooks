@@ -8,13 +8,13 @@ const Team = () => (
       {team.map(({ id, name, role, major, email }) => (
         <div key={id}>
           <p>
-            <div>
-              <b>
-                <a href={`mailto:${email}`}>{name}</a>
-              </b>
-            </div>
-            <div>{role}</div>
-            <div>{major}</div>
+            <b>
+              <a href={`mailto:${email}`}>{name}</a>
+            </b>
+            <br />
+            {role}
+            <br />
+            {major}
           </p>
         </div>
       ))}
