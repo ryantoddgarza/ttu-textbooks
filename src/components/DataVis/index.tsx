@@ -26,6 +26,7 @@ const DataVis = () => {
           hasWithdrawn: haveYouEverWithdrawn__appearsOnTranscriptAsA__W__FromACourseAtTexasTechUniversity_
           cost: howMuchMoneyDidYouSpendOnRequiredCourseMaterialsThisSemester_
           paymentMethod: howDoYouUsuallyPayForYourCourseMaterials__CheckAllThatApply
+          causedTo: duringYourEntireTimeAtTexasTechUniversity_HasTheCostOfMaterialsForACourseCausedYouTo__CheckAllThatApply
         }
       }
     }
@@ -67,6 +68,7 @@ const DataVis = () => {
   const paymentMethod = data
     .map(({ paymentMethod }) => paymentMethod)
     .filter((ans) => ans != 'GI Bill Benefits');
+  const causedTo = data.map(({ causedTo }) => causedTo);
 
   const corrPayDrop = correlationCoefficient(
     unableToPay,
@@ -115,6 +117,27 @@ const DataVis = () => {
     ([key, value]) => {
       return { y: key, x: value };
     }
+  );
+
+  // Reduce cause categories
+  const causedToAnswers = [
+    'Not purchase the required materials',
+    'Take fewer courses',
+    'Earn a lower grade than expected',
+  ];
+  const causedToCategories = instancesIn(causedTo, causedToAnswers);
+
+  // Calculate cause percentages
+  const causedNoPurchasePct = Math.round(
+    (causedToCategories[causedToAnswers[0]] / causedTo.length) * 100
+  );
+
+  const causedFewerCoursesPct = Math.round(
+    (causedToCategories[causedToAnswers[1]] / causedTo.length) * 100
+  );
+
+  const causedLowerGradePct = Math.round(
+    (causedToCategories[causedToAnswers[2]] / causedTo.length) * 100
   );
 
   // For conditional rendering of layout elements
@@ -189,6 +212,21 @@ const DataVis = () => {
             </XYPlot>
           </section>
         </div>
+        <h3>Material Cost Effects</h3>
+        <p>
+          <b>{causedNoPurchasePct}%</b> of students said that the cost of
+          materials has caused them to{' '}
+          <b>not purchase the required materials</b> at some point in their
+          enrollment at Texas Tech University.
+        </p>
+        <p>
+          <b>{causedFewerCoursesPct}%</b> of students said that the cost of
+          materials has caused them to <b>take fewer courses</b>.
+        </p>
+        <p>
+          <b>{causedLowerGradePct}%</b> of students believe that the cost of
+          materials has caused them to <b>earn a lower grade than expected</b>.
+        </p>
       </div>
     </>
   );
