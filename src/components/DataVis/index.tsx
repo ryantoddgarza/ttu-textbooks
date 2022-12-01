@@ -61,89 +61,121 @@ const DataVis = () => {
   }
 
   // Arrays by question
-  const unableToPay = data.map(({ unableToPay }) => unableToPay);
-  const hasDropped = data.map(({ hasDropped }) => hasDropped);
-  const hasWithdrawn = data.map(({ hasWithdrawn }) => hasWithdrawn);
-  const cost = data.map(({ cost }) => cost);
-  const paymentMethod = data
-    .map(({ paymentMethod }) => paymentMethod)
-    .filter((ans) => ans != 'GI Bill Benefits');
-  const causedTo = data.map(({ causedTo }) => causedTo);
+  const qArr = {
+    unableToPay: data.map(({ unableToPay }) => unableToPay),
+    hasDropped: data.map(({ hasDropped }) => hasDropped),
+    hasWithdrawn: data.map(({ hasWithdrawn }) => hasWithdrawn),
+    cost: data.map(({ cost }) => cost),
+    paymentMethod: data
+      .map(({ paymentMethod }) => paymentMethod)
+      .filter((ans) => ans != 'GI Bill Benefits'),
+    causedTo: data.map(({ causedTo }) => causedTo),
+  };
 
-  const corrPayDrop = correlationCoefficient(
-    unableToPay,
-    hasDropped,
-    data.length
-  );
+  // Correlation coefficients
+  const corr = {
+    payDrop: correlationCoefficient(
+      qArr.unableToPay,
+      qArr.hasDropped,
+      data.length
+    ),
+    payWithdraw: correlationCoefficient(
+      qArr.unableToPay,
+      qArr.hasWithdrawn,
+      data.length
+    ),
+  };
 
-  const corrPayWithdraw = correlationCoefficient(
-    unableToPay,
-    hasWithdrawn,
-    data.length
-  );
+  // Cost calculations
+  const cost = (() => {
+    const categories = instancesIn(qArr.cost);
+    const hiCategory = getHiValueKey(categories);
+    const reactVis = Object.entries(categories).map(([key, value]) => {
+      return { x: key, y: value };
+    });
 
-  // Reduce cost categories
-  const costCategories = instancesIn(cost);
+    // Sort react-vis dat
+    reactVis.unshift(reactVis.splice(reactVis.length - 1, 1)[0]);
 
-  // Get cost category with the most responses
-  const mostCostCategory = getHiValueKey(costCategories);
+    return {
+      category: {
+        list: categories,
+        hi: hiCategory,
+      },
+      data: {
+        reactVis,
+      },
+    };
+  })();
 
-  // Format cost data for react-vis
-  const costData = Object.entries(costCategories).map(([key, value]) => {
-    return { x: key, y: value };
-  });
+  // Payment calculations
+  const payment = (() => {
+    const answers = [
+      'I use money from family.',
+      'I use my own money earned from campus or outside job.',
+      'I use money from student loans.',
+      'I use non-loan awarded money (i.e. pell grant, scholarships, financial aid, GI bill).',
+    ];
+    const categories = instancesIn(qArr.paymentMethod, answers);
 
-  // Sort cost data
-  costData.unshift(costData.splice(costData.length - 1, 1)[0]);
+    // Rename categories for react-vis
+    renameKey(categories, answers[0], 'Family');
+    renameKey(categories, answers[1], 'Job');
+    renameKey(categories, answers[2], 'Loans');
+    renameKey(categories, answers[3], 'Awards');
 
-  // Reduce payment method categories
-  const paymentAnswers = [
-    'I use money from family.',
-    'I use my own money earned from campus or outside job.',
-    'I use money from student loans.',
-    'I use non-loan awarded money (i.e. pell grant, scholarships, financial aid, GI bill).',
-  ];
-  const paymentMethodCategories = instancesIn(paymentMethod, paymentAnswers);
-  renameKey(paymentMethodCategories, paymentAnswers[0], 'Family');
-  renameKey(paymentMethodCategories, paymentAnswers[1], 'Job');
-  renameKey(paymentMethodCategories, paymentAnswers[2], 'Loans');
-  renameKey(paymentMethodCategories, paymentAnswers[3], 'Awards');
-
-  // Get payment method category with the most responses
-  const mostPaymentMethodCategory = getHiValueKey(paymentMethodCategories);
-
-  // Format payment method data for react-vis
-  const paymentMethodData = Object.entries(paymentMethodCategories).map(
-    ([key, value]) => {
+    const hiCategory = getHiValueKey(categories);
+    const reactVis = Object.entries(categories).map(([key, value]) => {
       return { y: key, x: value };
-    }
-  );
+    });
 
-  // Reduce cause categories
-  const causedToAnswers = [
-    'Not purchase the required materials',
-    'Take fewer courses',
-    'Earn a lower grade than expected',
-  ];
-  const causedToCategories = instancesIn(causedTo, causedToAnswers);
+    return {
+      category: {
+        list: categories,
+        hi: hiCategory,
+      },
+      data: {
+        reactVis,
+      },
+    };
+  })();
 
-  // Calculate cause percentages
-  const causedNoPurchasePct = Math.round(
-    (causedToCategories[causedToAnswers[0]] / causedTo.length) * 100
-  );
+  // Cause calculations
+  const cause = (() => {
+    const answers = [
+      'Not purchase the required materials',
+      'Take fewer courses',
+      'Earn a lower grade than expected',
+    ];
+    const categories = instancesIn(qArr.causedTo, answers);
+    const hiCategory = getHiValueKey(categories);
+    const questionCalc = {
+      noPurchase: {
+        pct: Math.round((categories[answers[0]] / qArr.causedTo.length) * 100),
+      },
+      fewerCourses: {
+        pct: Math.round((categories[answers[1]] / qArr.causedTo.length) * 100),
+      },
+      lowerGrade: {
+        pct: Math.round((categories[answers[2]] / qArr.causedTo.length) * 100),
+      },
+    };
 
-  const causedFewerCoursesPct = Math.round(
-    (causedToCategories[causedToAnswers[1]] / causedTo.length) * 100
-  );
-
-  const causedLowerGradePct = Math.round(
-    (causedToCategories[causedToAnswers[2]] / causedTo.length) * 100
-  );
+    return {
+      category: {
+        list: categories,
+        hi: hiCategory,
+      },
+      data: {
+        q: questionCalc,
+      },
+    };
+  })();
 
   // For conditional rendering of layout elements
   const layout = {
-    hasDropData: corrPayDrop > 0,
-    hasWitdrawalData: corrPayWithdraw > 0,
+    hasDropData: corr.payDrop > 0,
+    hasWitdrawalData: corr.payWithdraw > 0,
   };
 
   return (
@@ -155,7 +187,7 @@ const DataVis = () => {
             {layout.hasDropData && (
               <p>
                 Students unable to pay for course materials are{' '}
-                <b>{Math.round(corrPayDrop * 100)}% more likely to drop</b>{' '}
+                <b>{Math.round(corr.payDrop * 100)}% more likely to drop</b>{' '}
                 (does not appear on transcript) a course at Texas Tech
                 University.
               </p>
@@ -164,7 +196,7 @@ const DataVis = () => {
               <p>
                 Students unable to pay for course materials are{' '}
                 <b>
-                  {Math.round(corrPayWithdraw * 100)}% more likely to withdraw
+                  {Math.round(corr.payWithdraw * 100)}% more likely to withdraw
                 </b>{' '}
                 (appears on transcript) from a course at Texas Tech University.
               </p>
@@ -178,7 +210,7 @@ const DataVis = () => {
           <section>
             <h4>Spending</h4>
             <p>
-              Most students spend {mostCostCategory} per semester on required
+              Most students spend {cost.category.hi} per semester on required
               course materials.
             </p>
             <XYPlot
@@ -188,7 +220,7 @@ const DataVis = () => {
               xType="ordinal"
             >
               <HorizontalGridLines />
-              <VerticalBarSeries data={costData} />
+              <VerticalBarSeries data={cost.data.reactVis} />
               <XAxis tickLabelAngle={-45} />
               <YAxis />
             </XYPlot>
@@ -197,7 +229,7 @@ const DataVis = () => {
             <h4>Payment Method</h4>
             <p>
               When asked how they pay for course materials, most students
-              responded, &quot;{mostPaymentMethodCategory.toLowerCase()}.&quot;
+              responded, &quot;{payment.category.hi.toLowerCase()}.&quot;
             </p>
             <XYPlot
               width={300}
@@ -206,7 +238,7 @@ const DataVis = () => {
               yType="ordinal"
             >
               <VerticalGridLines />
-              <HorizontalBarSeries data={paymentMethodData} />
+              <HorizontalBarSeries data={payment.data.reactVis} />
               <XAxis />
               <YAxis />
             </XYPlot>
@@ -214,18 +246,19 @@ const DataVis = () => {
         </div>
         <h3>Material Cost Effects</h3>
         <p>
-          <b>{causedNoPurchasePct}%</b> of students said that the cost of
-          materials has caused them to{' '}
+          <b>{cause.data.q.noPurchase.pct}%</b> of students stated that the cost
+          of materials has caused them to{' '}
           <b>not purchase the required materials</b> at some point in their
           enrollment at Texas Tech University.
         </p>
         <p>
-          <b>{causedFewerCoursesPct}%</b> of students said that the cost of
-          materials has caused them to <b>take fewer courses</b>.
+          <b>{cause.data.q.fewerCourses.pct}%</b> of students stated that the
+          cost of materials has caused them to <b>take fewer courses</b>.
         </p>
         <p>
-          <b>{causedLowerGradePct}%</b> of students believe that the cost of
-          materials has caused them to <b>earn a lower grade than expected</b>.
+          <b>{cause.data.q.lowerGrade.pct}%</b> of students believe that the
+          cost of materials has caused them to{' '}
+          <b>earn a lower grade than expected</b>.
         </p>
       </div>
     </>
